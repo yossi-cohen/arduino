@@ -21,13 +21,12 @@ LiquidCrystal_I2C lcd(i2c_addr, en, rw, rs, d4, d5, d6, d7, bl, POSITIVE);
 
 void setup()
 {
-
   // Set display type as 16 char, 2 rows
   lcd.begin(16,2);
   
   // Print on first row
   lcd.setCursor(0,0);
-  lcd.print("שלום יונתן!");
+  lcd.print("hello");
   
   // Wait 1 second
   delay(1000);
@@ -36,57 +35,57 @@ void setup()
   lcd.setCursor(0,1);
   lcd.print("How are you?");
   
-  // Wait 8 seconds
-  delay(8000);
+  // Wait 2 seconds
+  delay(2000);
   
   // Clear the display
   lcd.clear();
-
 }
 
 
 void loop()
 {
-  
-  // Demo 1 - flash backlight
+  // scroll
   lcd.setCursor(0,0);
-  lcd.print("Backlight demo");
-  lcd.setCursor(0,1);
-  lcd.print("Flash 4 times");
-  
-  delay(3000);
+  lcd.print("My name is");
+  delay(1000);
   lcd.clear();
+  lcd.setCursor(0,1);
+  lcd.print("Yonatan Cohen");
+  delay(1000);
+
+  // scroll 13 positions (string length + display length) to the right
+  for (int i = 0; i < 13; i++)
+  {
+    // scroll one position left:
+    lcd.scrollDisplayLeft();
+    // wait a bit
+    delay(250);
+  }
   
-  // Flash backlight 4 times
+  // clear screen 
+  lcd.clear();
+
+  // flash backlight
+  lcd.setCursor(0,0);
+  lcd.print("bye");
+  lcd.setCursor(0,1);
+  lcd.print("bye");
+
+  delay(1000);
+  
+  // flash backlight 4 times
   for(int i = 0; i< 4; i++)
-    {
+  {
     lcd.backlight();
     delay(250);
     lcd.noBacklight();
     delay(250);
-    }
+  }
 
-  // Turn backlight back on
-  lcd.backlight();
-    
-  // Demo 2 - scroll
-  lcd.setCursor(0,0);
-  lcd.print("Scroll demo - ");
-  delay(1500);
-  // set the display to automatically scroll:
-  lcd.autoscroll();
-  // print from 0 to 9:
-  for (int thisChar = 0; thisChar < 10; thisChar++) {
-    lcd.print(thisChar);
-    delay(500);
-    }
-  // turn off automatic scrolling
-  lcd.noAutoscroll();
-
-  // clear screen 
   lcd.clear();
   
-  //Delay
+  // turn backlight on
+  lcd.backlight();
   delay(1000);
-
 }
